@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lê Văn Anh Huy | Portfolio</title>
+    <style>
+      :root {
+        --bg-primary: #090909;
+        --bg-secondary: #15090c;
+        --bg-card: #1b080b;
+        --red-dark: #8b0015;
+        --red-primary: #e50935;
+        --red-neon: #ff3158;
+        --text-primary: #ffffff;
+        --text-secondary: #bab2b5;
+        --panel-border: rgba(255, 49, 88, 0.55);
+        --shadow-red: rgba(229, 9, 53, 0.45);
+        --bg-soft: #1d1015;
+        --gold: #ffd166;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(255, 49, 88, 0.14), transparent 30%),
+          linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.02) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        pointer-events: none;
+        z-index: 30;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      .container {
+        width: min(1200px, calc(100% - 48px));
+        margin: 0 auto;
+      }
+
+      .pixel-frame {
+        position: relative;
+        border: 2px solid var(--panel-border);
+        background: linear-gradient(180deg, rgba(32, 10, 15, 0.92), rgba(15, 5, 9, 0.95));
+        box-shadow: 0 0 0 2px rgba(139, 0, 21, 0.8), 0 0 18px rgba(229, 9, 53, 0.2);
+      }
+
+      .pixel-frame::before,
+      .pixel-frame::after,
+      .pixel-corner::before,
+      .pixel-corner::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: var(--red-neon);
+        box-shadow: 0 0 12px var(--red-neon);
+      }
+
+      .pixel-frame::before { top: -6px; left: -6px; }
+      .pixel-frame::after { top: -6px; right: -6px; }
+      .pixel-corner::before { bottom: -6px; left: -6px; }
+      .pixel-corner::after { bottom: -6px; right: -6px; }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(8px);
+        background: rgba(9, 9, 9, 0.8);
+        border-bottom: 2px solid var(--panel-border);
+      }
+
+      .nav-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 88px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        width: 52px;
+        height: 52px;
+        border: 2px solid var(--red-neon);
+        display: grid;
+        place-items: center;
+        font-size: 1.35rem;
+        background: rgba(255, 49, 88, 0.08);
+        box-shadow: inset 0 0 14px rgba(255, 49, 88, 0.12), 0 0 12px rgba(255, 49, 88, 0.18);
+        position: relative;
+      }
+
+      .brand-mark::before,
+      .brand-mark::after {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border: 2px solid rgba(255, 49, 88, 0.8);
+      }
+
+      .brand-mark::after {
+        inset: 16px;
+      }
+
+      .brand-name {
+        font-size: 0.82rem;
+        color: var(--text-primary);
+      }
+
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .nav-menu a {
+        position: relative;
+        color: var(--text-secondary);
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 10px 0;
+        transition: color 0.25s ease;
+      }
+
+      .nav-menu a:hover,
+      .nav-menu a.active {
+        color: var(--text-primary);
+      }
+
+      .nav-menu a.active::before,
+      .nav-menu a:hover::before {
+        content: ">";
+        position: absolute;
+        left: -14px;
+        color: var(--red-neon);
+        text-shadow: 0 0 12px var(--red-neon);
+      }
+
+      .nav-toggle {
+        display: none;
+        border: 2px solid var(--panel-border);
+        background: rgba(255, 49, 88, 0.05);
+        color: var(--text-primary);
+        width: 46px;
+        height: 46px;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .nav-toggle span,
+      .nav-toggle span::before,
+      .nav-toggle span::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 2px;
+        transition: 0.3s ease;
+      }
+
+      .nav-toggle span::before { top: 12px; }
+      .nav-toggle span { top: 20px; }
+      .nav-toggle span::after { bottom: 12px; }
+
+      .nav-toggle.active span { background: transparent; }
+      .nav-toggle.active span::before { transform: rotate(45deg); top: 0; }
+      .nav-toggle.active span::after { transform: rotate(-45deg); bottom: 0; }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 80px 0 80px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        gap: 34px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.82rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--red-neon);
+        margin-bottom: 24px;
+        text-shadow: 0 0 12px rgba(255, 49, 88, 0.65);
+      }
+
+      .hero-title {
+        font-size: clamp(3.2rem, 5vw, 7rem);
+        line-height: 0.9;
+        letter-spacing: 2px;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        display: block;
+      }
+
+      .hero-title .reveal {
+        display: inline-block;
+        position: relative;
+        color: transparent;
+        background: linear-gradient(180deg, #fff 0%, #fff 45%, #ffb6c3 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        animation: textReveal 1.6s ease forwards;
+        text-shadow: 0 0 18px rgba(255, 49, 88, 0.2);
+      }
+
+      .hero-title .reveal:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+
+      .hero-sub {
+        max-width: 720px;
+        color: var(--text-secondary);
+        margin-bottom: 32px;
+        font-size: 1.08rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        min-width: 200px;
+        padding: 0 24px;
+        border: 2px solid var(--red-neon);
+        background: linear-gradient(180deg, rgba(229, 9, 53, 0.2), rgba(139, 0, 21, 0.25));
+        color: var(--text-primary);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 0 16px rgba(255, 49, 88, 0.18);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 22px rgba(255, 49, 88, 0.35);
+      }
+
+      .btn.secondary {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .hero-panel {
+        position: relative;
+        min-height: 520px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-card {
+        width: min(100%, 420px);
+        padding: 26px;
+        background: rgba(18, 7, 11, 0.85);
+        border: 2px solid var(--panel-border);
+        position: relative;
+        box-shadow: 0 0 0 2px rgba(139, 0, 21, 0.8), 0 0 22px rgba(229, 9, 53, 0.18);
+      }
+
+      .profile-card::before,
+      .profile-card::after {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border: 1px solid rgba(255, 49, 88, 0.35);
+      }
+
+      .avatar-box {
+        height: 220px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--panel-border);
+        margin-bottom: 22px;
+        background: linear-gradient(180deg, rgba(255, 49, 88, 0.06), rgba(255, 49, 88, 0));
+        position: relative;
+      }
+
+      .avatar-box::before,
+      .avatar-box::after {
+        content: "";
+        position: absolute;
+        inset: 12px 16px 12px 16px;
+        border: 2px solid rgba(255, 49, 88, 0.7);
+      }
+
+      .avatar-letter {
+        font-size: clamp(5rem, 9vw, 7rem);
+        font-weight: 900;
+        letter-spacing: 5px;
+        color: var(--red-neon);
+        text-shadow: 0 0 12px rgba(255, 49, 88, 0.7), 0 0 22px rgba(255, 49, 88, 0.25);
+      }
+
+      .profile-meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .meta-box {
+        padding: 12px 10px;
+        border: 1px solid rgba(255, 49, 88, 0.35);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .meta-box .label {
+        display: block;
+        font-size: 0.68rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 6px;
+      }
+
+      .meta-box strong {
+        font-size: 0.9rem;
+        color: var(--text-primary);
+      }
+
+      .hud {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .hud::before,
+      .hud::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+      }
+
+      .hud::before {
+        background-image: linear-gradient(to right, transparent 0%, rgba(255, 49, 88, 0.18) 50%, transparent 100%);
+        mix-blend-mode: screen;
+      }
+
+      .hud::after {
+        inset: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(255, 49, 88, 0.05) 100%);
+      }
+
+      .section {
+        padding: 36px 0 30px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(1.8rem, 2vw, 3rem);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .section-head .tag {
+        color: var(--red-neon);
+        letter-spacing: 2px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+
+      .about-layout {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 30px;
+      }
+
+      .about-card,
+      .timeline-card,
+      .work-card,
+      .skill-card,
+      .contact-card {
+        background: rgba(18, 7, 11, 0.7);
+        border: 2px solid var(--panel-border);
+        box-shadow: 0 0 22px rgba(229, 9, 53, 0.08);
+      }
+
+      .about-card {
+        padding: 26px;
+      }
+
+      .about-card h3,
+      .timeline-card h3,
+      .skill-card h3,
+      .contact-card h3 {
+        font-size: 1.1rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        color: var(--red-neon);
+      }
+
+      .about-card p {
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        font-size: 1rem;
+      }
+
+      .profile-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .detail-item {
+        padding: 14px 12px;
+        border: 1px solid rgba(255, 49, 88, 0.35);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .detail-item span {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+      }
+
+      .detail-item strong {
+        font-size: 0.95rem;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .mini-panel {
+        padding: 20px;
+        border: 2px solid var(--panel-border);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .mini-panel .label {
+        display: inline-block;
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--red-neon);
+        margin-bottom: 8px;
+      }
+
+      .mini-panel p {
+        color: var(--text-secondary);
+      }
+
+      .timeline-wrap {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 26px;
+      }
+
+      .timeline-card {
+        padding: 24px;
+      }
+
+      .timeline-list,
+      .work-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .timeline-item {
+        position: relative;
+        padding: 0 0 0 22px;
+        border-left: 2px solid rgba(255, 49, 88, 0.35);
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -7px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        background: var(--red-neon);
+        box-shadow: 0 0 0 4px rgba(255, 49, 88, 0.12), 0 0 18px rgba(255, 49, 88, 0.25);
+      }
+
+      .timeline-item .date {
+        display: inline-block;
+        margin-bottom: 8px;
+        color: var(--red-neon);
+        font-size: 0.78rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+
+      .timeline-item h4 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
+      .timeline-item p {
+        color: var(--text-secondary);
+      }
+
+      .timeline-item .meta {
+        color: var(--gold);
+        font-style: italic;
+      }
+
+      .experience-group {
+        display: grid;
+        gap: 22px;
+      }
+
+      .work-card {
+        padding: 24px;
+      }
+
+      .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 14px;
+        margin-bottom: 12px;
+      }
+
+      .job-header h4 {
+        font-size: 1.2rem;
+      }
+
+      .job-header .time {
+        color: var(--red-neon);
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .job-role {
+        color: var(--text-secondary);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .job-list {
+        list-style: disc;
+        margin-left: 18px;
+        color: var(--text-secondary);
+        display: grid;
+        gap: 8px;
+      }
+
+      .skills-wrap {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 24px;
+      }
+
+      .skill-card {
+        padding: 24px;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .skill-tags span {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 49, 88, 0.35);
+        background: rgba(255, 49, 88, 0.05);
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+      }
+
+      .cert-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .cert-item {
+        padding: 14px 16px;
+        border: 1px solid rgba(255, 49, 88, 0.35);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .cert-item strong {
+        color: var(--text-primary);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .cert-item span {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      .contact-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        padding: 24px;
+        margin-top: 6px;
+      }
+
+      .contact-block p {
+        color: var(--text-secondary);
+      }
+
+      .site-footer {
+        padding: 16px 0 48px;
+        color: var(--text-secondary);
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        padding-top: 22px;
+        border-top: 2px solid var(--panel-border);
+      }
+
+      .footer-logo {
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: var(--text-primary);
+      }
+
+      .firework-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .firework {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: var(--red-neon);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--red-neon), 0 0 16px var(--red-neon);
+        animation: burst 2.6s ease-out infinite;
+      }
+
+      @keyframes burst {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(0.4);
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(var(--x), var(--y)) scale(1.2);
+        }
+      }
+
+      @keyframes textReveal {
+        0% {
+          opacity: 0;
+          filter: blur(10px);
+          transform: translateY(18px) scale(0.96);
+          clip-path: inset(0 100% 0 0);
+        }
+        60% {
+          opacity: 1;
+          filter: blur(2px);
+        }
+        100% {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0) scale(1);
+          clip-path: inset(0 0 0 0);
+        }
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid,
+        .about-layout,
+        .skills-wrap,
+        .timeline-wrap,
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .hero {
+          padding-top: 60px;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .nav-menu {
+          position: absolute;
+          top: 88px;
+          left: 0;
+          right: 0;
+          display: none;
+          flex-direction: column;
+          align-items: flex-start;
+          background: rgba(9, 9, 9, 0.98);
+          border-bottom: 2px solid var(--panel-border);
+          padding: 20px 24px 24px;
+          gap: 18px;
+        }
+
+        .nav-menu.open {
+          display: flex;
+        }
+
+        .nav-toggle {
+          display: block;
+        }
+
+        .brand-name {
+          display: none;
+        }
+
+        .profile-list {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-block,
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#home" class="brand" aria-label="Trang chủ">
+          <span class="brand-mark">AH</span>
+          <span class="brand-name">Lê Văn Anh Huy</span>
+        </a>
+
+        <nav class="nav-menu" aria-label="Menu chính">
+          <a href="#home" class="active">Home</a>
+          <a href="#about">Profile</a>
+          <a href="#education">Education</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+        </nav>
+
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="firework-layer" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Welcome to my world</span>
+            <h1 class="hero-title">
+              <span class="reveal">LÊ VĂN</span><br />
+              <span class="reveal">ANH HUY</span>
+            </h1>
+            <p class="hero-sub">
+              Tôi là một người làm việc trong lĩnh vực quản lý kho, điều phối vận chuyển và kiểm soát chất lượng.
+              Hiện đang theo học Thương mại điện tử để nâng cao năng lực công nghệ, quản trị và phát triển nghề nghiệp.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#about" class="btn">Start Game</a>
+              <a href="#experience" class="btn secondary">Enter Portfolio</a>
+            </div>
+          </div>
+
+          <div class="hero-panel">
+            <div class="pixel-frame profile-card pixel-corner">
+              <div class="avatar-box">
+                <div class="avatar-letter">AH</div>
+              </div>
+              <div class="profile-meta">
+                <div class="meta-box">
+                  <span class="label">Gender</span>
+                  <strong>Nam</strong>
+                </div>
+                <div class="meta-box">
+                  <span class="label">City</span>
+                  <strong>TP. Hồ Chí Minh</strong>
+                </div>
+                <div class="meta-box">
+                  <span class="label">Birth</span>
+                  <strong>25/07/1994</strong>
+                </div>
+                <div class="meta-box">
+                  <span class="label">Status</span>
+                  <strong>Student</strong>
+                </div>
+              </div>
+            </div>
+            <div class="hud" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Player Profile</h2>
+            <span class="tag">Character Stats</span>
+          </div>
+
+          <div class="about-layout">
+            <div class="about-card pixel-frame">
+              <h3>Giới thiệu</h3>
+              <p>
+                Tôi có kinh nghiệm làm việc trong lĩnh vực quản lý kho, điều phối vận chuyển và kiểm soát chất lượng.
+                Hiện tôi đang theo học ngành Thương mại điện tử nhằm mở rộng kiến thức về công nghệ, kinh doanh và
+                quản trị hệ thống.
+              </p>
+              <p>
+                Tôi luôn mong muốn học hỏi, phát triển kỹ năng và nâng cao hiệu quả công việc trong môi trường chuyên nghiệp,
+                có trách nhiệm và cần sự phối hợp hiệu quả giữa con người, quy trình và công nghệ.
+              </p>
+
+              <div class="profile-list">
+                <div class="detail-item">
+                  <span>Hobi</span>
+                  <strong>Công nghệ, Thể thao, Ẩm thực</strong>
+                </div>
+                <div class="detail-item">
+                  <span>Khu vực</span>
+                  <strong>TP.HCM, Việt Nam</strong>
+                </div>
+                <div class="detail-item">
+                  <span>Lĩnh vực</span>
+                  <strong>Thương mại điện tử</strong>
+                </div>
+                <div class="detail-item">
+                  <span>Focus</span>
+                  <strong>Kho vận &amp; QC</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-grid">
+              <article class="mini-panel pixel-frame">
+                <span class="label">Interests</span>
+                <p>Thương mại điện tử, Công nghệ thông tin, Kho vận và quản lý hàng hóa, Điều phối vận chuyển, Kiểm soát chất lượng.</p>
+              </article>
+
+              <article class="mini-panel pixel-frame">
+                <span class="label">Strengths</span>
+                <p>Quản lý kho, kiểm kê hàng hóa, phối hợp vận chuyển, giao tiếp, kiểm soát chất lượng và làm việc nhóm hiệu quả.</p>
+              </article>
+
+              <article class="mini-panel pixel-frame">
+                <span class="label">Philosophy</span>
+                <p>Học hỏi liên tục, nâng cao hiệu quả, luôn cải tiến quy trình và duy trì sự chính xác trong công việc.</p>
+              </article>
+
+              <article class="mini-panel pixel-frame">
+                <span class="label">Career Goal</span>
+                <p>Mở rộng kỹ năng công nghệ và kinh doanh để phát triển trong lĩnh vực thương mại điện tử và logistics hiện đại.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Education</h2>
+            <span class="tag">Academy records</span>
+          </div>
+
+          <div class="timeline-wrap">
+            <article class="timeline-card pixel-frame">
+              <h3>Trường học</h3>
+              <div class="timeline-list">
+                <div class="timeline-item">
+                  <span class="date">10/2009 – 05/2012</span>
+                  <h4>THPT Lương Thế Vinh</h4>
+                  <p>Tốt nghiệp loại Khá, điểm trung bình 7.5.</p>
+                </div>
+
+                <div class="timeline-item">
+                  <span class="date">08/2018 – 11/2018</span>
+                  <h4>Viện Công nghệ Môi trường – Năng lượng Nhất Nghệ</h4>
+                  <p class="meta">PC Trouble Shooting Technician</p>
+                  <p>Tốt nghiệp loại Giỏi, điểm trung bình 8.0.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="timeline-card pixel-frame">
+              <h3>Chứng chỉ &amp; học tập</h3>
+              <div class="timeline-list">
+                <div class="timeline-item">
+                  <span class="date">28/02/2022 – 30/08/2022</span>
+                  <h4>Đại học Kinh tế</h4>
+                  <p class="meta">Xuất nhập khẩu – Hải quan</p>
+                </div>
+
+                <div class="timeline-item">
+                  <span class="date">12/2023 – Hiện tại</span>
+                  <h4>Đại học Kinh tế</h4>
+                  <p class="meta">Ngành: Thương mại điện tử</p>
+                  <p>Đang theo học chương trình Cử nhân.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Experience</h2>
+            <span class="tag">Work history</span>
+          </div>
+
+          <div class="experience-group">
+            <article class="work-card pixel-frame">
+              <div class="job-header">
+                <h4>MINISTOP VIETNAM</h4>
+                <span class="time">08/2016 – 02/2018</span>
+              </div>
+              <div class="job-role">Nhân viên cửa hàng</div>
+              <ul class="job-list">
+                <li>Sắp xếp và trưng bày hàng hóa.</li>
+                <li>Kiểm kê, kiểm tra hạn sử dụng.</li>
+                <li>Phục vụ khách hàng và thu ngân.</li>
+              </ul>
+            </article>
+
+            <article class="work-card pixel-frame">
+              <div class="job-header">
+                <h4>CÔNG TY MẮT BÃO</h4>
+                <span class="time">03/2018 – 05/2018</span>
+              </div>
+              <div class="job-role">Nhân viên tư vấn tên miền (website)</div>
+              <ul class="job-list">
+                <li>Liên hệ khách hàng.</li>
+                <li>Tư vấn dịch vụ và sản phẩm.</li>
+                <li>Giải đáp thắc mắc và hỗ trợ khách hàng.</li>
+              </ul>
+            </article>
+
+            <article class="work-card pixel-frame">
+              <div class="job-header">
+                <h4>CÔNG TY TNHH MTV TÂN LỰC MIỀN NAM</h4>
+                <span class="time">08/2018 – 07/2021</span>
+              </div>
+              <div class="job-role">Nhân viên phụ kho, điều phối</div>
+              <ul class="job-list">
+                <li>Quản lý, kiểm kê và sắp xếp hàng hóa.</li>
+                <li>Kiểm tra đơn hàng và tồn kho.</li>
+                <li>Phối hợp với nhân viên bán hàng.</li>
+                <li>Liên hệ đơn vị vận chuyển.</li>
+                <li>Điều phối nhân viên giao hàng.</li>
+                <li>Sắp xếp khu vực và tuyến giao hàng.</li>
+              </ul>
+            </article>
+
+            <article class="work-card pixel-frame">
+              <div class="job-header">
+                <h4>CÔNG TY ĐÔNG DƯỢC VIỆT</h4>
+                <span class="time">26/10/2021 – 04/2022</span>
+              </div>
+              <div class="job-role">Quản lý kho</div>
+              <ul class="job-list">
+                <li>Kiểm soát hàng hóa.</li>
+                <li>Phối hợp với kế toán kho.</li>
+                <li>Soạn hàng, đóng gói.</li>
+                <li>Sắp xếp tuyến vận chuyển.</li>
+                <li>Lập báo cáo xuất nhập tồn.</li>
+              </ul>
+            </article>
+
+            <article class="work-card pixel-frame">
+              <div class="job-header">
+                <h4>CÔNG TY TNHH SX VÀ TM NAM THIÊN LONG</h4>
+                <span class="time">04/2022 – 12/06/2026</span>
+              </div>
+              <div class="job-role">Kiểm tra chất lượng</div>
+              <ul class="job-list">
+                <li>Thu thập mẫu nguyên vật liệu.</li>
+                <li>Kiểm tra ngoại quan, kích thước và các chỉ số.</li>
+                <li>Sử dụng công cụ đo kiểm.</li>
+                <li>Dán nhãn và đóng dấu chất lượng.</li>
+                <li>Lắp ráp thử nghiệm sản phẩm.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Skills &amp; Certificates</h2>
+            <span class="tag">Inventory</span>
+          </div>
+
+          <div class="skills-wrap">
+            <article class="skill-card pixel-frame">
+              <h3>Kỹ năng</h3>
+              <div class="skill-tags">
+                <span>Tin học văn phòng</span>
+                <span>Quản lý kho</span>
+                <span>Điều phối vận chuyển</span>
+                <span>Kiểm kê hàng hóa</span>
+                <span>Kiểm soát chất lượng</span>
+                <span>Giao tiếp và phối hợp</span>
+                <span>Kiến thức thương mại điện tử</span>
+              </div>
+            </article>
+
+            <article class="skill-card pixel-frame">
+              <h3>Chứng chỉ</h3>
+              <div class="cert-list">
+                <div class="cert-item">
+                  <strong>PC Trouble Shooting Technician</strong>
+                  <span>2018</span>
+                </div>
+                <div class="cert-item">
+                  <strong>Xuất nhập khẩu – Hải quan</strong>
+                  <span>2022</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-logo">LÊ VĂN ANH HUY</div>
+        <p>Retro Arcade Portfolio • Logistics • Quality Control • E-Commerce</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mã JavaScript tạo hiệu ứng firework và menu mobile.
+      const navToggle = document.querySelector('.nav-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+      const navLinks = document.querySelectorAll('.nav-menu a');
+
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('open');
+        navToggle.classList.toggle('active', isOpen);
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('open');
+          navToggle.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
+          navLinks.forEach((item) => item.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
+
+      function createFirework() {
+        const layer = document.querySelector('.firework-layer');
+        const firework = document.createElement('span');
+        firework.className = 'firework';
+        const x = Math.random() * 100;
+        const y = Math.random() * 52 + 12;
+        firework.style.left = x + '%';
+        firework.style.top = y + '%';
+        firework.style.setProperty('--x', (Math.random() * 120 - 60) + 'px');
+        firework.style.setProperty('--y', (Math.random() * 120 - 60) + 'px');
+        firework.style.background = Math.random() > 0.3 ? '#ff3158' : '#ffd166';
+        layer.appendChild(firework);
+        setTimeout(() => firework.remove(), 2600);
+      }
+
+      setInterval(createFirework, 880);
+    </script>
+  </body>
+</html>
